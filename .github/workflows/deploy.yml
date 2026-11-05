@@ -36,11 +36,11 @@ jobs:
 
       - name: Actualizar función Lambda
         run: |
-          aws lambda update-function-code --function-name descuento-docker --image-uri ${{ env.IMAGE }}
-          aws lambda wait function-updated --function-name descuento-docker
+          aws lambda update-function-code --function-name descuento-lambda --image-uri ${{ env.IMAGE }}
+          aws lambda wait function-updated --function-name descuento-lambda
 
       - name: Prueba de funcionamiento (Smoke Test)
         run: |
-          aws lambda invoke --function-name descuento-docker --payload '{"unidades":150,"precioCentavos":2500}' r.json
+          aws lambda invoke --function-name descuento-lambda --payload '{"unidades":150,"precioCentavos":2500}' r.json
           cat r.json
           jq -e '.porcentaje == 10' r.json
